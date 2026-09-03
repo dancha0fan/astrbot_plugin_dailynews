@@ -1,0 +1,15 @@
+name: "astrbot_plugin_dailynews"
+display_name: "每日资讯日报"
+short_desc: "早报+晚报双版次，AI 中文摘要/评分/选版，暗色图片卡片，按领域订阅，群内一键重新生成"
+desc: >-
+  把 AI 编辑过的每日资讯日报推送到你的群聊/私聊。
+  支持早报与晚报双版次（晚报为暗色图片卡片）、八大领域订阅过滤、
+  AI 模型可插拔（OpenAI / Anthropic 兼容接口均可，配置页直接换模型）、
+  会话订阅（指令或配置页）、群内一键重新生成。
+  内置完整编辑链路：多源采集 → AI 中文摘要与价值评分 → 旧闻/广告硬过滤 →
+  事件聚合去重 → 来源配额 → 全局编辑选版（含选题理由与"后续观察点"）→ 选题审计日志。
+version: "v0.6.0"
+author: "80654"
+repo: "https://github.com/80654/astrbot_plugin_dailynews"
+astrbot_version: ">=4.0.0"
+tags: ["新闻资讯", "RSS", "AI", "定时推送", "订阅"]

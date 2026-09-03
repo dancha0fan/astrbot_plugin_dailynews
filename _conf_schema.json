@@ -1,0 +1,133 @@
+{
+  "morning_push_time": {
+    "type": "string",
+    "description": "早报推送时间（HH:MM）",
+    "hint": "建议比流水线 08:00 生成晚半小时",
+    "default": "08:30"
+  },
+  "evening_enabled": {
+    "type": "bool",
+    "description": "启用晚报（18:30 推送，暗色图片）",
+    "default": true
+  },
+  "evening_push_time": {
+    "type": "string",
+    "description": "晚报推送时间（HH:MM）",
+    "default": "18:30"
+  },
+  "timezone": {
+    "type": "string",
+    "description": "推送时间使用的时区",
+    "hint": "服务器多用 UTC，中文用户建议保持 Asia/Shanghai",
+    "default": "Asia/Shanghai"
+  },
+  "send_image": {
+    "type": "bool",
+    "description": "是否发送图片卡片",
+    "default": true
+  },
+  "send_text": {
+    "type": "bool",
+    "description": "是否发送文字摘要",
+    "default": true
+  },
+  "digest_max_items": {
+    "type": "int",
+    "description": "文字摘要最多条数",
+    "default": 10
+  },
+  "files_dir": {
+    "type": "string",
+    "description": "日报成品目录（流水线同步的目标目录）",
+    "hint": "留空 = 插件数据目录 data/plugin_data/astrbot_plugin_dailynews；填绝对路径则以填写为准",
+    "default": ""
+  },
+  "pipeline_dir": {
+    "type": "string",
+    "description": "流水线目录（与 AstrBot 同机时，'重新整理'会代跑其中的 run.py daily）",
+    "default": "/home/xiajiao/news-pipeline"
+  },
+  "regen_enabled": {
+    "type": "bool",
+    "description": "允许在群里触发重新整理（重新采集+AI 分析）",
+    "default": true
+  },
+  "regen_cooldown_minutes": {
+    "type": "int",
+    "description": "重新整理的冷却分钟数（防止频繁触发消耗 AI 额度）",
+    "default": 10
+  },
+  "subscribed_sessions": {
+    "type": "list",
+    "description": "配置页订阅的会话（在这里直接选定要推送的群/私聊）",
+    "hint": "每项格式：群号（默认按群聊）、group:群号、private:QQ号，或完整 UMO（用 /日报会话 可查看 bot 见过的会话 UMO）。与 /日报订阅 合并生效",
+    "default": []
+  },
+  "default_platform": {
+    "type": "string",
+    "description": "会话默认平台 ID（与 WebUI 平台配置的平台 ID 一致）",
+    "hint": "NapCat/OneBot 适配器一般是 aiocqhttp；不确定就发 /日报会话 看完整 UMO 的第一段",
+    "default": "aiocqhttp"
+  },
+  "custom_categories": {
+    "type": "string",
+    "description": "可订阅的领域清单（逗号分隔；需与流水线 config/categories.yaml 的 label 一致）",
+    "default": "人工智能,军事,外交,经济,科技,国际,文化,社会"
+  },
+  "ai_provider": {
+    "type": "string",
+    "description": "AI 供应商标识（留空=用流水线默认配置）",
+    "hint": "仅作标注，如 minimax / deepseek / siliconflow",
+    "default": ""
+  },
+  "ai_protocol": {
+    "type": "string",
+    "description": "接口协议：anthropic 或 openai（留空=用流水线默认）",
+    "hint": "MiniMax-M3 用 anthropic；DeepSeek/硅基流动 用 openai",
+    "default": ""
+  },
+  "ai_base_url": {
+    "type": "string",
+    "description": "API 地址（留空=用流水线默认）",
+    "hint": "例：https://api.minimax.cn/anthropic 或 https://api.deepseek.com",
+    "default": ""
+  },
+  "ai_model": {
+    "type": "string",
+    "description": "模型名（留空=用流水线默认）",
+    "hint": "例：MiniMax-M3 / deepseek-chat",
+    "default": ""
+  },
+  "ai_api_key": {
+    "type": "string",
+    "description": "API Key（留空=用流水线 secrets.yaml 的密钥）",
+    "hint": "保存后写入流水线覆盖文件，只改 AI 行为，不影响其他配置",
+    "default": ""
+  },
+  "ai_max_tokens": {
+    "type": "int",
+    "description": "单条分析输出上限（0=用流水线默认）",
+    "default": 0
+  },
+  "ai_timeout_seconds": {
+    "type": "int",
+    "description": "单次调用超时秒（0=用流水线默认）",
+    "default": 0
+  },
+  "rss_feeds": {
+    "type": "list",
+    "description": "RSS 订阅源清单（留空=用流水线默认清单）",
+    "hint": "每项格式：领域|网址（如 ai|https://www.qbitai.com/feed）或纯网址；领域 key 见 config/categories.yaml。保存后下一轮生成生效",
+    "default": []
+  },
+  "enable_hackernews": {
+    "type": "bool",
+    "description": "启用 Hacker News 采集（Algolia 公开 API）",
+    "default": true
+  },
+  "hackernews_hits": {
+    "type": "int",
+    "description": "Hacker News 每次拉取条数",
+    "default": 30
+  }
+}
