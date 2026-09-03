@@ -10,6 +10,6 @@ desc: >-
   事件聚合去重 → 来源配额 → 全局编辑选版（含选题理由与"后续观察点"）→ 选题审计日志。
 version: "v0.6.0"
 author: "80654"
-repo: "https://github.com/80654/astrbot_plugin_dailynews"
+repo: "https://github.com/hulizt18/astrbot_plugin_dailynews"
 astrbot_version: ">=4.0.0"
 tags: ["新闻资讯", "RSS", "AI", "定时推送", "订阅"]
