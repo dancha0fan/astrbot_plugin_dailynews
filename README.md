@@ -1,6 +1,14 @@
+<p align="center">
+  <img src="logo.png" width="128" alt="每日资讯日报">
+</p>
+
 # astrbot_plugin_dailynews · 每日资讯日报
 
+<div align="center">
+
 一个 [AstrBot](https://github.com/AstrBotDevs/AstrBot) 插件：把 AI 编辑过的每日资讯日报推送到你的 QQ 群/私聊。支持**早报 + 晚报双版次**、**领域订阅过滤**、**AI 模型可插拔**、**群内一键重新生成**。
+
+</div>
 
 ![预览](docs/preview-evening.png)
 
