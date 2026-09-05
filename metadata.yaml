@@ -8,8 +8,8 @@ desc: >-
   会话订阅（指令或配置页）、群内一键重新生成。
   内置完整编辑链路：多源采集 → AI 中文摘要与价值评分 → 旧闻/广告硬过滤 →
   事件聚合去重 → 来源配额 → 全局编辑选版（含选题理由与"后续观察点"）→ 选题审计日志。
-version: "v0.6.0"
-author: "80654"
+version: "v0.6.1"
+author: "danchaofan"
 repo: "https://github.com/dancha0fan/astrbot_plugin_dailynews"
 astrbot_version: ">=4.0.0"
 tags: ["新闻资讯", "RSS", "AI", "定时推送", "订阅"]
