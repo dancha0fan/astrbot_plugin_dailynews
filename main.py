@@ -13,6 +13,7 @@ import asyncio
 import json
 import time
 from datetime import datetime, timedelta
+import re
 from pathlib import Path
 
 import astrbot.api.message_components as Comp
@@ -583,13 +584,23 @@ class DailyNewsPlugin(Star):
 
     @filter.regex(r"日报|早报|晚报")
     async def cmd_digest_nlp(self, event: AstrMessageEvent):
-        """自然语言触发：短消息里含"日报/早报/晚报"即响应；含"重新/刷新"走重新生成。"""
+        """自然语言触发（收紧版）：仅当消息是"日报/早报/晚报"单独一词，
+        或带有明确动作意图（整理/生成/来一份/看看/发一下等）时才响应；
+        普通聊天里偶然提到"日报"不再触发。"""
         text = (event.message_str or "").strip()
         if len(text) > 30:
             return
         if text in {"日报订阅", "日报退订", "日报状态", "日报刷新", "订阅领域", "领域日报",
                     "日报推送", "日报会话"}:
             return
+        bare = text in {"日报", "早报", "晚报"}
+        intent = re.search(
+            r"(整理|生成|刷新|推送|来一?份?|发一?下?|发个|看看|看下|看一下|查看|获取)", text)
+        mentions = any(w in text for w in ("日报", "早报", "晚报"))
+        if not mentions:
+            return
+        if not (bare or intent):
+            return  # 无动作意图的普通聊天，不触发
         try:
             chain_text = "".join(
                 getattr(comp, "text", "") or "" for comp in event.message_obj.message
