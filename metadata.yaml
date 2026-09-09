@@ -1,7 +1,7 @@
 name: "astrbot_plugin_dailynews"
 display_name: "每日资讯日报"
 desc: "接收本机日报流水线同步的成品，支持 /日报 查看，订阅后每日定时推送图片+文字日报到群聊"
-version: "v0.6.2"
+version: "v0.6.3"
 author: "danchaofan"
 repo: "https://github.com/80654/daily-news"
 astrbot_version: ">=4.0.0"

@@ -497,6 +497,57 @@ class DailyNewsPlugin(Star):
         yield event.plain_result(
             f"{label}推送指令执行完毕，发送 /日报状态 可核对。")
 
+    @filter.command("智库")
+    async def cmd_pan(self, event: AstrMessageEvent):
+        """查看最新一期《智库研判日报》（/智库）"""
+        self._remember_seen(event)
+        files = sorted(self.data_dir.glob("zhiku-pan-*-draft.md"))
+        if not files:
+            yield event.plain_result(
+                "还没有《智库研判日报》草稿。生成方式：服务器上运行 run.py pan"
+                "（预览模式，不自动发送）。")
+            return
+        text = files[-1].read_text(encoding="utf-8")
+        if text.startswith("---"):
+            end = text.find("---", 3)
+            if end != -1:
+                text = text[end + 3:].lstrip()
+        limit = int(self.config.get("pan_max_chars", 3800))
+        if len(text) > limit:
+            text = text[:limit] + "\n\n…（已截断，全文见知识库 out/zhiku-pan/）"
+        for i in range(0, len(text), 2800):
+            yield event.plain_result(text[i:i + 2800])
+
+    @filter.command("智库推送")
+    async def cmd_pan_push(self, event: AstrMessageEvent):
+        """向已确认的订阅会话推送研判日报（需配置页开启 pan_send_enabled）"""
+        if not self.config.get("pan_send_enabled", False):
+            yield event.plain_result(
+                "研判日报自动发送未启用（默认关闭）。需在配置页确认发送时间与会话目标后"
+                "开启 pan_send_enabled。当前可用 /智库 查看预览稿。")
+            return
+        files = sorted(self.data_dir.glob("zhiku-pan-*-draft.md"))
+        if not files:
+            yield event.plain_result("没有研判日报草稿可推送。")
+            return
+        text = files[-1].read_text(encoding="utf-8")
+        if text.startswith("---"):
+            end = text.find("---", 3)
+            if end != -1:
+                text = text[end + 3:].lstrip()
+        subs = self._load_subs()
+        ok = failed = 0
+        for umo in subs:
+            try:
+                for i in range(0, len(text), 2800):
+                    await self.context.send_message(
+                        umo, MessageChain().message(text[i:i + 2800]))
+                ok += 1
+            except Exception as exc:
+                failed += 1
+                logger.error(f"[{PLUGIN_NAME}] 研判日报推送失败 {umo}：{exc}")
+        yield event.plain_result(f"研判日报推送完成：成功 {ok}，失败 {failed}。")
+
     @filter.command("日报状态")
     async def cmd_status(self, event: AstrMessageEvent):
         """查看日报插件状态（订阅数、各版次文件、推送时间）"""
